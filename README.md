@@ -7,7 +7,7 @@ To run our program, first you need to download the 4 files we attached and insta
 We used some libraries such as random, math, copy,..... However these libraries can be used without downloading.
 
 
-First, you need to open the file game_better.py and run this python file on the terminal. 
+First, you need to open the file game_better.py in the_real_project folder and run this python file on the terminal. 
 
 
 ![image](https://user-images.githubusercontent.com/112222605/210299547-d9c63119-acf6-485a-a59c-fa9ee02bbb20.png)
@@ -30,9 +30,5 @@ Now it's your game with COM player. The game will end if it satisfies our ending
 Otherwise, if you want to exit the game, enter 'x' to exit: 
 ![image](https://user-images.githubusercontent.com/112222605/210334540-0ec15327-97c3-4b3c-ab65-018707144ef4.png)
 
-.
 
-
-
-
-
+That's how to run our game. Enjoy!
