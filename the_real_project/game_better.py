@@ -72,7 +72,7 @@ def main():
 
     position = Position(table, True)
     time_previous_move = 4.5
-    depth = 6
+    depth = 5
 
     # the number of figures, and a counter of how many moves have passed without capturing
     without_capture = [0, 0]
@@ -81,59 +81,59 @@ def main():
         if ending_conditions(position, without_capture, forced_capture):
             break
         if position._white_to_move:
-            num_moves_white = len(position.get_next_moves())
-            depth = determine_dynamic_depth(time_previous_move, depth, forced_capture, num_moves_white)
-            previous_table = deepcopy(position.get_table())
+#             num_moves_white = len(position.get_next_moves())
+#             depth = determine_dynamic_depth(time_previous_move, depth, forced_capture, num_moves_white)
+#             previous_table = deepcopy(position.get_table())
 
-            print("Player1 thinking...............................")
-            print("New depth is {} ".format(depth))
+#             print("Player1 thinking...............................")
+#             print("New depth is {} ".format(depth))
 
-            t1 = time()
-            num_figures = position.count_pieces()
-            if num_figures[0] + num_figures[1] > 6:
-                alpha_beta(position, depth, -inf, inf, False, forced_capture)
-                #min_max(position, depth, False, forced_capture)
-                position = min(position.get_next_moves())
-            else:
-                alpha_beta(position, 10, -inf, inf, False, forced_capture)
-                #min_max(position, 15, False, forced_capture)
-                position = min(position.get_next_moves())
-            # alpha_beta(position, depth, -inf, inf, False, forced_capture)
-            # position = min(position.get_next_moves())
-            t2 = time()
-            time_previous_move = t2 - t1
+#             t1 = time()
+#             num_figures = position.count_pieces()
+#             if num_figures[0] + num_figures[1] > 6:
+#                 alpha_beta(position, depth, -inf, inf, False, forced_capture)
+#                 #min_max(position, depth, False, forced_capture)
+#                 position = min(position.get_next_moves())
+#             else:
+#                 alpha_beta(position, 10, -inf, inf, False, forced_capture)
+#                 #min_max(position, 15, False, forced_capture)
+#                 position = min(position.get_next_moves())
+#             # alpha_beta(position, depth, -inf, inf, False, forced_capture)
+#             # position = min(position.get_next_moves())
+#             t2 = time()
+#             time_previous_move = t2 - t1
 
-            #res.append(time_previous_move) # store AI process time in res
+#             #res.append(time_previous_move) # store AI process time in res
     
+#             differences = position.find_move_played(previous_table)
+#             print(time_previous_move)
+#             print_table(position.get_table(), differences) # print the move played by the AI
+#             print("Player1 played a move displayed on the table above.\n\n")
+
+            available_pieces = position.find_capturing_moves()
+            if forced_capture:
+                print_table(position.get_table(), available_pieces)
+                piece = input_choose_piece(position, available_pieces)
+            else:
+                print_table(position.get_table())
+                piece = input_choose_piece(position)
+
+            if not piece:
+                print("Goodbye! See you again!")
+                break
+
+            valid_moves = position.find_valid_moves_for_piece(piece, forced_capture)
+            print_table(position.get_table(), piece, valid_moves)
+            new_position = input_choose_field(valid_moves)
+            if not new_position:
+                print("Goodbye!")
+                break
+
+            previous_table = deepcopy(position.get_table())
+            position = position.play_move(piece, new_position)
             differences = position.find_move_played(previous_table)
-            print(time_previous_move)
-            print_table(position.get_table(), differences) # print the move played by the AI
-            print("Player1 played a move displayed on the table above.\n\n")
-
-            # available_pieces = position.find_capturing_moves()
-            # if forced_capture:
-            #     print_table(position.get_table(), available_pieces)
-            #     piece = input_choose_piece(position, available_pieces)
-            # else:
-            #     print_table(position.get_table())
-            #     piece = input_choose_piece(position)
-
-            # if not piece:
-            #     print("Goodbye! See you again!")
-            #     break
-
-            # valid_moves = position.find_valid_moves_for_piece(piece, forced_capture)
-            # print_table(position.get_table(), piece, valid_moves)
-            # new_position = input_choose_field(valid_moves)
-            # if not new_position:
-            #     print("Goodbye!")
-            #     break
-
-            # previous_table = deepcopy(position.get_table())
-            # position = position.play_move(piece, new_position)
-            # differences = position.find_move_played(previous_table)
             
-            # print("User played the move displayed on the table above.\n\n\n")
+            print("User played the move displayed on the table above.\n\n\n")
 
         if ending_conditions(position, without_capture, forced_capture):
             break
